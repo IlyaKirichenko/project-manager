@@ -1,0 +1,51 @@
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+    "title": "Первая задача",
+    "done": false
+}
+
+###
+
+PUT http://localhost:8000/tasks/1
+Content-Type: application/json
+
+{
+    "title": "Первая задача выполнена",
+    "done": true
+}
+
+###
+
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+    "title": "Вторая задача",
+    "done": true
+}
+
+###
+
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+    "title": "Третья задача",
+    "done": false
+}
+
+###
+
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+    "title": "Четвёртая задача",
+    "done": true
+}
+
+###
+
+DELETE http://localhost:8000/tasks/5
