@@ -159,5 +159,77 @@ func main() {
 		c.JSON(http.StatusOK, t)
 	})
 
+	router.PUT("/tasks/:id", func(c *gin.Context) {
+		idStr := c.Param("id")
+
+		id, err := strconv.Atoi(idStr)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный id"})
+			return
+		}
+
+		var updateTask Task
+		if err := c.ShouldBindJSON(&updateTask); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		res, err := db.Exec("UPDATE tasks SET title = ?, done = ? WHERE id = ?", updateTask.Title, updateTask.Done, id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		n, err := res.RowsAffected()
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if n == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Затронуто 0 строк"})
+			return
+		}
+
+		updateTask.ID = id
+
+		c.JSON(http.StatusOK, updateTask)
+
+	})
+
+	router.DELETE("/tasks/:id", func(c *gin.Context) {
+		idStr := c.Param("id")
+
+		id, err := strconv.Atoi(idStr)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный id"})
+			return
+		}
+
+		res, err := db.Exec("DELETE FROM tasks WHERE id = ?", id)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		n, err := res.RowsAffected()
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if n == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Затронуто 0 строк"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Задача удалена"})
+	})
+
 	router.Run(":8000")
 }

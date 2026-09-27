@@ -8,11 +8,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8000/tasks/1
+PUT http://localhost:8000/tasks/4
 Content-Type: application/json
 
 {
-    "title": "Первая задача выполнена",
+    "title": "Четвертая задача",
     "done": true
 }
 
@@ -25,6 +25,10 @@ Content-Type: application/json
     "title": "Вторая задача",
     "done": true
 }
+
+###
+
+DELETE http://localhost:8000/tasks/2
 
 ###
 
