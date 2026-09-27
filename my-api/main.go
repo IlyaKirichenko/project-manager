@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	_ "github.com/microsoft/go-mssqldb"
+	_ "modernc.org/sqlite"
 )
 
 type Task struct {
@@ -21,10 +21,11 @@ type Task struct {
 var db *sql.DB
 
 func initDB() {
-	connString := "server=.\\SQLEXPRESS;database=CourseDB;Integrated Security=true;encrypt=disable"
 
 	var err error
-	db, err = sql.Open("sqlserver", connString)
+
+	db, err = sql.Open("sqlite", "database.db")
+
 	if err != nil {
 		log.Fatalf("Ошибка открытия БД: %v", err)
 	}
@@ -32,12 +33,30 @@ func initDB() {
 		log.Fatalf("Ошибка подключения к БД: %v", err)
 	}
 
-	fmt.Println("Подключено к SQL Server!")
+	fmt.Println("Подключено к SQLite!")
+}
+
+func initSchema() {
+	query := `CREATE TABLE IF NOT EXISTS tasks (
+	id		INTEGER PRIMARY KEY AUTOINCREMENT,
+	title	TEXT NOT NULL,
+	done 	BOOLEAN NOT NULL DEFAULT 0
+	 );`
+
+	_, err := db.Exec(query)
+
+	if err != nil {
+		log.Fatalf("Ошибка создания таблицы: %v", err)
+	}
+
+	fmt.Println("Таблица tasks готова")
 }
 
 func main() {
 
 	initDB()
+
+	initSchema()
 
 	router := gin.Default()
 
@@ -49,18 +68,21 @@ func main() {
 			return
 		}
 
-		query := "INSERT INTO tasks (title, done) OUTPUT INSERTED.id VALUES (@p1, @p2)"
-
-		var newID int
-
-		err := db.QueryRow(query, newTask.Title, newTask.Done).Scan(&newID)
+		res, err := db.Exec("INSERT INTO tasks (title, done) VALUES (?, ?)", newTask.Title, newTask.Done)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка записи в БД: " + err.Error()})
 			return
 		}
 
-		newTask.ID = newID
+		newID, err := res.LastInsertId()
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка записи в БД: " + err.Error()})
+			return
+		}
+
+		newTask.ID = int(newID)
 
 		c.JSON(http.StatusCreated, newTask)
 	})
@@ -73,20 +95,16 @@ func main() {
 
 		var args []interface{}
 
-		paramIndex := 1
-
 		if doneParam != "" {
 			isDone, err := strconv.ParseBool(doneParam)
 			if err == nil {
-				query += fmt.Sprintf(" AND done = @p%d", paramIndex)
+				query += " AND done = ?"
 				args = append(args, isDone)
-				paramIndex++
 			}
 		}
 		if searchParam != "" {
-			query += fmt.Sprintf(" AND title LIKE '%%' + @p%d + '%%'", paramIndex)
+			query += " AND title LIKE '%' || ? || '%'"
 			args = append(args, searchParam)
-			paramIndex++
 		}
 
 		rows, err := db.Query(query, args...)
@@ -97,7 +115,7 @@ func main() {
 
 		defer rows.Close()
 
-		var tasks []Task
+		tasks := []Task{}
 
 		for rows.Next() {
 			var t Task
@@ -115,6 +133,30 @@ func main() {
 			return
 		}
 		c.JSON(http.StatusOK, tasks)
+	})
+
+	router.GET("/tasks/:id", func(c *gin.Context) {
+		idStr := c.Param("id")
+
+		id, err := strconv.Atoi(idStr)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный id"})
+			return
+		}
+
+		var t Task
+		err = db.QueryRow("SELECT id, title, done FROM tasks WHERE id = ?", id).Scan(&t.ID, &t.Title, &t.Done)
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Задача не найдена"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Ошибка запроса"})
+			return
+		}
+
+		c.JSON(http.StatusOK, t)
 	})
 
 	router.Run(":8000")
