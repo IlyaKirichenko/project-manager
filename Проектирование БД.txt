@@ -1,0 +1,27 @@
+1. user
+- PK id_user (int) key
+-user_name (text)
+-email (text)
+-password (text)
+-admin (boolean)
+
+2. project
+- PK id_project (int) key
+- FK id_owner (int) 
+-name_project (text)
+
+3. users_in_project
+-PK id_project (int)
+-PK id_users (int)
+
+4. tasks
+-PK id_task (int) key
+-FK id_project (int)
+-FK id_user (int)
+-name_task (text)
+-FK id_state (int)
+-date (datetime)
+
+5. state_tasks
+-PK id_state (int) key
+-name (text)
