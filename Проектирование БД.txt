@@ -21,6 +21,7 @@
 -name_task (text)
 -FK id_state (int)
 -date (datetime)
+-discription (text)
 
 5. state_tasks
 -PK id_state (int) key
