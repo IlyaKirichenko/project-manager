@@ -10,6 +10,7 @@
 - FK id_owner (int) 
 -name_project (text)
 -direction_project (text)
+-deadline (datetime)
 
 3. users_in_project
 -PK id_project (int)
