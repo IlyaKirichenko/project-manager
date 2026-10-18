@@ -9,6 +9,7 @@
 - PK id_project (int) key
 - FK id_owner (int) 
 -name_project (text)
+-direction_project (text)
 
 3. users_in_project
 -PK id_project (int)
