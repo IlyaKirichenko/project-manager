@@ -4,12 +4,13 @@
 -email (text)
 -password (text)
 -admin (boolean)
+-is_blocked (boolean)
 
 2. project
 - PK id_project (int) key
 - FK id_owner (int) 
 -name_project (text)
--direction_project (text)
+-description_project (text)
 -deadline (datetime)
 
 3. users_in_project
@@ -23,7 +24,7 @@
 -name_task (text)
 -FK id_state (int)
 -date (datetime)
--discription (text)
+-description (text)
 
 5. state_tasks
 -PK id_state (int) key
