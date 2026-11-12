@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1. user
 - PK id_user (int) key
 -user_name (text)
@@ -28,4 +29,36 @@
 
 5. state_tasks
 -PK id_state (int) key
+=======
+1. user
+- PK id_user (int) key
+-user_name (text)
+-email (text)
+-password (text)
+-admin (boolean)
+-is_blocked (boolean)
+
+2. project
+- PK id_project (int) key
+- FK id_owner (int) 
+-name_project (text)
+-description_project (text)
+-deadline (datetime)
+
+3. users_in_project
+-PK id_project (int)
+-PK id_users (int)
+
+4. tasks
+-PK id_task (int) key
+-FK id_project (int)
+-FK id_user (int)
+-name_task (text)
+-FK id_state (int)
+-date (datetime)
+-description (text)
+
+5. state_tasks
+-PK id_state (int) key
+>>>>>>> d9734c3f2cbaf43a57de430cf5b453e3048e365f
 -name (text)
