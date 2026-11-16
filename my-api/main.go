@@ -21,6 +21,7 @@ func main() {
 	router.POST("/project", controllers.CreateProjectHandler)
 
 	router.POST("/tasks", controllers.CreateTaskHandler)
+	router.GET("/tasks/:id", controllers.GetTaskByIDHandler)
 
 	router.Run(":8000")
 

@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"database/sql"
 	"my-api/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,4 +32,25 @@ func CreateTaskHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, createNewTask)
+}
+
+func GetTaskByIDHandler(c *gin.Context) {
+
+	idTask := c.Param("id")
+
+	id, err := strconv.Atoi(idTask)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Неверный id"})
+		return
+	}
+	task, err := models.GetTaskByID(id)
+	if err == sql.ErrNoRows {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Задача не найдена"})
+		return
+	}
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, task)
 }
