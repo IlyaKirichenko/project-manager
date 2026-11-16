@@ -8,8 +8,14 @@ type Project struct {
 	Deadline     string `json:"deadline"`
 }
 
-func CreateProject(IdOwner int, nameProject, descroption, deadline string) (Project, error) {
-	insertDb, err := db.Exec("INSERT INTO project (id_owner, name_project, description_project, deadline) VALUES (?, ?, ?, ?)", IdOwner, nameProject, descroption, deadline)
+func CreateProject(IdOwner int, nameProject, description, deadline string) (Project, error) {
+	tx, err := db.Begin()
+	if err != nil {
+		return Project{}, err
+	}
+	defer tx.Rollback()
+
+	insertDb, err := tx.Exec("INSERT INTO project (id_owner, name_project, description_project, deadline) VALUES (?, ?, ?, ?)", IdOwner, nameProject, description, deadline)
 	if err != nil {
 		return Project{}, err
 	}
@@ -19,12 +25,21 @@ func CreateProject(IdOwner int, nameProject, descroption, deadline string) (Proj
 		return Project{}, err
 	}
 
+	_, err = tx.Exec("INSERT INTO users_in_project (id_project, id_users) VALUES (?, ?)", newProjectId, IdOwner)
+	if err != nil {
+		return Project{}, err
+	}
+
 	newProject := Project{
 		Id_project:   int(newProjectId),
 		Id_owner:     IdOwner,
 		Name_project: nameProject,
-		Description:  descroption,
+		Description:  description,
 		Deadline:     deadline,
+	}
+
+	if err := tx.Commit(); err != nil {
+		return Project{}, err
 	}
 
 	return newProject, nil
