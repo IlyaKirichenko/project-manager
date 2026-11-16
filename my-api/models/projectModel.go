@@ -9,12 +9,12 @@ type Project struct {
 }
 
 func CreateProject(IdOwner int, nameProject, descroption, deadline string) (Project, error) {
-	inserDb, err := db.Exec("INSERT INTO project (id_owner, name_project, description_project, deadline) VALUES (?, ?, ?, ?)", IdOwner, nameProject, descroption, deadline)
+	insertDb, err := db.Exec("INSERT INTO project (id_owner, name_project, description_project, deadline) VALUES (?, ?, ?, ?)", IdOwner, nameProject, descroption, deadline)
 	if err != nil {
 		return Project{}, err
 	}
 
-	newProjectId, err := inserDb.LastInsertId()
+	newProjectId, err := insertDb.LastInsertId()
 	if err != nil {
 		return Project{}, err
 	}

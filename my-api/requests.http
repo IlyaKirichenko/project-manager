@@ -18,3 +18,16 @@ Content-Type: application/json
     "description_project": "Описание проекта",
     "deadline": "2027-12-31"
 }
+
+###
+
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+    "id_project": 1,
+    "id_user": 1,
+    "name_task": "Тестовая задача 2",
+    "id_state": 2,
+    "description": "Описание задачи"
+}

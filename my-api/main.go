@@ -20,6 +20,8 @@ func main() {
 
 	router.POST("/project", controllers.CreateProjectHandler)
 
+	router.POST("/tasks", controllers.CreateTaskHandler)
+
 	router.Run(":8000")
 
 	/*router.POST("/tasks", func(c *gin.Context) {
