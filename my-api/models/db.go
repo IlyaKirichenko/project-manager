@@ -77,3 +77,10 @@ func InitSchema() {
 
 	fmt.Println("Таблицы готовы")
 }
+
+func SeedStates() {
+	_, err := db.Exec("INSERT OR IGNORE INTO state_tasks (name) VALUES (?), (?)", "в работе", "выполнено")
+	if err != nil {
+		log.Fatalf("Ошибка создания таблицы state_tasks: %v", err)
+	}
+}

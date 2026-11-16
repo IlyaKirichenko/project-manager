@@ -12,10 +12,13 @@ func main() {
 
 	models.InitDB()
 	models.InitSchema()
+	models.SeedStates()
 
 	router := gin.Default()
 
 	router.POST("/user", controllers.CreateUserHandler)
+
+	router.POST("/project", controllers.CreateProjectHandler)
 
 	router.Run(":8000")
 

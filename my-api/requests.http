@@ -8,3 +8,13 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:8000/project
+Content-Type: application/json
+
+{
+    "id_owner": 1,
+    "name_project": "Тестовый проект",
+    "description_project": "Описание проекта",
+    "deadline": "2027-12-31"
+}
