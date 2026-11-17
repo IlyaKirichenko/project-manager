@@ -44,6 +44,6 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-  "email": "твой email",
-  "password": "твой пароль"
+  "email": "email",
+  "password": "пароль"
 }
