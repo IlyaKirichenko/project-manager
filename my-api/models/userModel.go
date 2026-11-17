@@ -1,6 +1,8 @@
 package models
 
 import (
+	"database/sql"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -43,4 +45,38 @@ func CreateUser(userName, email, password string) (User, error) {
 	}
 
 	return newUser, nil
+}
+
+func GetUserByEmail(email string) (User, error) {
+	var u User
+
+	err := db.QueryRow("SELECT id_user, user_name, email, password, admin, is_blocked FROM user WHERE email = ?", email).Scan(&u.Id_user, &u.User_name, &u.Email, &u.Password, &u.Admin, &u.Is_blocked)
+
+	if err == sql.ErrNoRows {
+		return User{}, err
+	}
+	if err != nil {
+		return User{}, err
+	}
+
+	return u, nil
+}
+
+func GetUserByID(id int) (User, error) {
+	var u User
+
+	err := db.QueryRow("SELECT id_user, user_name, email, password, admin, is_blocked FROM user WHERE id_user = ?", id).Scan(&u.Id_user, &u.User_name, &u.Email, &u.Password, &u.Admin, &u.Is_blocked)
+
+	if err == sql.ErrNoRows {
+		return User{}, err
+	}
+	if err != nil {
+		return User{}, err
+	}
+
+	return u, nil
+}
+
+func CheckPassword(user User, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 }

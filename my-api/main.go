@@ -17,6 +17,9 @@ func main() {
 	router := gin.Default()
 
 	router.POST("/user", controllers.CreateUserHandler)
+	router.POST("/login", controllers.LoginHandler)
+	router.POST("/logout", controllers.LogoutHandler)
+	router.GET("/me", controllers.MeHandler)
 
 	router.POST("/project", controllers.CreateProjectHandler)
 
