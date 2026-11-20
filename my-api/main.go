@@ -23,11 +23,11 @@ func main() {
 	protected := router.Group("/")
 	protected.Use(middleware.RequireAuth())
 	{
-		router.POST("/logout", controllers.LogoutHandler)
-		router.GET("/me", controllers.MeHandler)
-		router.POST("/project", controllers.CreateProjectHandler)
-		router.POST("/tasks", controllers.CreateTaskHandler)
-		router.GET("/tasks/:id", controllers.GetTaskByIDHandler)
+		protected.POST("/logout", controllers.LogoutHandler)
+		protected.GET("/me", controllers.MeHandler)
+		protected.POST("/project", controllers.CreateProjectHandler)
+		protected.POST("/tasks", controllers.CreateTaskHandler)
+		protected.GET("/tasks/:id", controllers.GetTaskByIDHandler)
 	}
 
 	router.Run(":8000")

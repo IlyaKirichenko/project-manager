@@ -66,17 +66,13 @@ func LogoutHandler(c *gin.Context) {
 }
 
 func MeHandler(c *gin.Context) {
-	sessionID, err := c.Cookie("session_id")
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
-		return
-	}
-	findSession, ok := models.GetSession(sessionID)
+	findUser, ok := c.Get("userID")
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Вы не авторизованы"})
 		return
 	}
-	user, err := models.GetUserByID(findSession.UserID)
+	userID := findUser.(int)
+	user, err := models.GetUserByID(userID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

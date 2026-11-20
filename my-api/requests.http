@@ -11,6 +11,7 @@ Content-Type: application/json
 
 POST http://localhost:8000/project
 Content-Type: application/json
+Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf28953473f
 
 {
     "id_owner": 1,
@@ -23,6 +24,7 @@ Content-Type: application/json
 
 POST http://localhost:8000/tasks
 Content-Type: application/json
+Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf28953473f
 
 {
     "id_project": 1,
@@ -36,8 +38,7 @@ Content-Type: application/json
 
 GET http://localhost:8000/tasks/1
 Content-Type: application/json
-
-###
+Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf28953473f
 
 ###
 POST http://localhost:8000/login
@@ -47,6 +48,8 @@ Content-Type: application/json
   "email": "test@mail.com",
   "password": "123"
 }
+ 
 ###
+
 GET http://localhost:8000/me
-Cookie: session_id=123123wdbb69f481588bee1ad7b8d0d5bd3b4b0a9b52a70540a3
+Cookie: session_id=bfae3a4854d93aa44cb7d8bcfad50173e0a8347e275978cda0306d64b6e53307
