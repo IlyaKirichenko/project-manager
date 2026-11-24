@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 13px;
+}
+
+body {
+    margin: 0;
+    background-color: #e6dfd1;
+    color: #1c1c1c;
+}
+
+.container {
+    width: 820px;
+    margin: 30px auto;
+}
+
+.window {
+    background-color: #f7f4ec;
+    border: 1px solid #7d776c;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+    margin-bottom: 18px;
+}
+
+.window-header {
+    background: linear-gradient(180deg, #3b7a57 0%, #27573c 100%);
+    color: #ffffff;
+    font-weight: bold;
+    padding: 7px 12px;
+    border-bottom: 1px solid #1e422e;
+    border-radius: 4px 4px 0 0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.window-body {
+    padding: 16px;
+}
+
+.layout {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.main-col {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+label:first-child {
+    margin-top: 0;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 5px 7px;
+    background-color: #ffffff;
+    border: 1px solid #968f82;
+    color: #1c1c1c;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #2d6a4f;
+    background-color: #fffdf5;
+}
+
+button {
+    padding: 5px 16px;
+    background: linear-gradient(180deg, #fff3b0 0%, #f3d36b 100%);
+    border: 1px solid #7a6832;
+    border-radius: 3px;
+    color: #1c1c1c;
+    cursor: pointer;
+}
+
+button:hover {
+    background: linear-gradient(180deg, #fff7cc 0%, #f7de88 100%);
+    border-color: #27573c;
+}
+
+button:active {
+    background: #ebd073;
+}
+
+.btn-submit {
+    display: block;
+    margin: 18px auto 0;
+}
+
+.project-item {
+    background-color: #ffffff;
+    border: 1px solid #b5afa3;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.project-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.project-meta {
+    color: #555555;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 8px;
+    color: #27573c;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #b00020;
+    margin-top: 10px;
+}

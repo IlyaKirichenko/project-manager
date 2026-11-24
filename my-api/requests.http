@@ -2,8 +2,8 @@ POST http://localhost:8000/user
 Content-Type: application/json
 
 {
-    "user_name": "userTest",
-    "email": "test@mail.com",
+    "user_name": "user1",
+    "email": "1@mail.com",
     "password": "123"
 }
 
@@ -11,11 +11,11 @@ Content-Type: application/json
 
 POST http://localhost:8000/project
 Content-Type: application/json
-Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf28953473f
+Cookie: session_id=253366b8d8ed6fb572edf2dd3fb2171323037675ad6335e551e9817b0288783b
 
 {
-    "id_owner": 1,
-    "name_project": "Тестовый проект",
+    "id_owner": 2,
+    "name_project": "Втторой тестовый проект",
     "description_project": "Описание проекта",
     "deadline": "2027-12-31"
 }
@@ -24,13 +24,13 @@ Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf289534
 
 POST http://localhost:8000/tasks
 Content-Type: application/json
-Cookie: session_id=89aa6c34fc09e9d16e0ffa84fb0cb3a2d77e291acecfb715ac3cadf28953473f
+Cookie: session_id=253366b8d8ed6fb572edf2dd3fb2171323037675ad6335e551e9817b0288783b
 
 {
     "id_project": 1,
-    "id_user": 1,
-    "name_task": "Тестовая задача",
-    "id_state": 2,
+    "id_user": 2,
+    "name_task": "Тестовая задача новая",
+    "id_state": 1,
     "description": "Описание задачи"
 }
 
@@ -45,11 +45,11 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-  "email": "test@mail.com",
+  "email": "1@mail.com",
   "password": "123"
 }
  
 ###
 
 GET http://localhost:8000/me
-Cookie: session_id=bfae3a4854d93aa44cb7d8bcfad50173e0a8347e275978cda0306d64b6e53307
+Cookie: session_id=f90189c548b7a846ca90326f687e2feb6f7a099f0b81b62d3d0c26498bb21a55

@@ -17,6 +17,9 @@ func main() {
 
 	router := gin.Default()
 
+	router.Static("/static", "./static")
+	router.StaticFile("/", "./static/Login/login.html")
+
 	router.POST("/user", controllers.CreateUserHandler)
 	router.POST("/login", controllers.LoginHandler)
 
@@ -26,6 +29,7 @@ func main() {
 		protected.POST("/logout", controllers.LogoutHandler)
 		protected.GET("/me", controllers.MeHandler)
 		protected.POST("/project", controllers.CreateProjectHandler)
+		protected.GET("/project", controllers.GetUserProjectsHandler)
 		protected.POST("/tasks", controllers.CreateTaskHandler)
 		protected.GET("/tasks/:id", controllers.GetTaskByIDHandler)
 	}

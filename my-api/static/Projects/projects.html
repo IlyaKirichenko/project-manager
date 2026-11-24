@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои проекты</title>
+    <link rel="stylesheet" href="/static/Projects/projects.css">
+</head>
+<body>
+    <div class="container">
+        <div class="window">
+            <div class="window-header topbar">
+                <span>Система управления проектами</span>
+                <div>
+                    <span id="userName" style="margin-right: 12px;">...</span>
+                    <button id="logoutBtn" type="button">Выйти</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layout">
+            <div class="window sidebar">
+                <div class="window-header">Новый проект</div>
+                <div class="window-body">
+                    <form id="createProjectForm">
+                        <label for="nameProject">Название проекта:</label>
+                        <input type="text" id="nameProject" required>
+
+                        <label for="descProject">Описание:</label>
+                        <textarea id="descProject" rows="3"></textarea>
+
+                        <label for="deadline">Срок сдачи:</label>
+                        <input type="date" id="deadline" required>
+
+                        <button type="submit" class="btn-submit">Создать</button>
+                        <div id="projectError" class="error"></div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="window main-col">
+                <div class="window-header">Мои проекты</div>
+                <div class="window-body" id="projectsList">
+                    Загрузка...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/Projects/projects.js"></script>
+</body>
+</html>

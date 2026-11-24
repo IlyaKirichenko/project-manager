@@ -1,5 +1,7 @@
 package models
 
+import "database/sql"
+
 type Project struct {
 	Id_project   int    `json:"id_project"`
 	Id_owner     int    `json:"id_owner"`
@@ -43,4 +45,30 @@ func CreateProject(IdOwner int, nameProject, description, deadline string) (Proj
 	}
 
 	return newProject, nil
+}
+
+func GetProjectsByUserID(userID int) ([]Project, error) {
+	projects := []Project{}
+
+	rows, err := db.Query("SELECT p.id_project, p.id_owner, p.name_project, p.description_project, p.deadline FROM project p JOIN users_in_project uip ON p.id_project = uip.id_project WHERE uip.id_users = ?", userID)
+	if err == sql.ErrNoRows {
+		return nil, err
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Project
+		if err := rows.Scan(&p.Id_project, &p.Id_owner, &p.Name_project, &p.Description, &p.Deadline); err != nil {
+			return nil, err
+		}
+		projects = append(projects, p)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return projects, nil
 }
