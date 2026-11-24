@@ -14,7 +14,7 @@ Content-Type: application/json
 Cookie: session_id=253366b8d8ed6fb572edf2dd3fb2171323037675ad6335e551e9817b0288783b
 
 {
-    "id_owner": 2,
+    "id_owner": 1,
     "name_project": "Втторой тестовый проект",
     "description_project": "Описание проекта",
     "deadline": "2027-12-31"
